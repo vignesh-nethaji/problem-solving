@@ -1,1 +1,450 @@
-test problem solving
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# Problem Solving Questions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Microsoft Aptos Font */
+        @font-face {
+            font-family: 'Aptos';
+            src: url('https://db.onlinewebfonts.com/t/788c69137021e149c4cf4014902128b9.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Aptos', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Custom styles for pre-wrap to handle newlines in input/output */
+        pre {
+            white-space: pre-wrap;
+            word-break: break-all; /* Ensures long lines break */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100 text-gray-800 p-4 sm:p-6 lg:p-8">
+
+    <header class="bg-white shadow-md rounded-lg p-4 mb-6 text-center">
+        <h1 class="text-3xl sm:text-4xl font-bold text-blue-700">100 C# Problem Solving Questions</h1>
+        <p class="text-lg text-gray-600 mt-2">Intermediate Level with I/O Examples</p>
+    </header>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Category Filter -->
+        <aside class="lg:w-1/4 bg-white p-6 rounded-lg shadow-md h-fit">
+            <h2 class="text-xl font-semibold mb-4 text-blue-600">Filter by Category</h2>
+            <div id="category-filter-container" class="flex flex-wrap gap-2">
+                <!-- Category buttons will be rendered here by JavaScript -->
+            </div>
+        </aside>
+
+        <!-- Questions List -->
+        <main class="lg:w-3/4 bg-white p-6 rounded-lg shadow-md">
+            <div id="questions-list" class="space-y-6">
+                <!-- Questions will be rendered here by JavaScript -->
+            </div>
+
+            <!-- Pagination Controls -->
+            <div id="pagination-controls" class="flex justify-center items-center space-x-2 mt-8 flex-wrap">
+                <!-- Pagination buttons will be rendered here by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <footer class="text-center text-gray-500 text-sm mt-8 p-4">
+        <p>&copy; 2025 C# Problem Solving. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Data for the 100 C# Problem Solving Questions
+        // Each question includes id, category, question, and optional input/output examples.
+        const questionsData = [
+            // Category 1: Basic Syntax & Control Flow (Problems 1-15)
+            { id: 1, category: "Basic Syntax & Control Flow", question: "Write a C# program that prints 'Hello, World!' to the console. Modify it to print your name on a new line.", input: "None", output: "Hello, World!\\n[Your Name]" },
+            { id: 2, category: "Basic Syntax & Control Flow", question: "Create a program that asks the user for their name and age. Print a greeting like 'Hello, [Name]! You are [Age] years old.' Ensure proper type conversion for age.", input: "Name: Alice\\nAge: 30", output: "Hello, Alice! You are 30 years old." },
+            { id: 3, category: "Basic Syntax & Control Flow", question: "Write a program that takes two numbers as input from the user. Calculate and display their sum, difference, product, quotient, and remainder. Handle potential division by zero.", input: "Num1: 10\\nNum2: 3", output: "Sum: 13\\nDifference: 7\\nProduct: 30\\nQuotient: 3\\nRemainder: 1" },
+            { id: 4, category: "Basic Syntax & Control Flow", question: "Develop a program that takes an integer as input. Determine if the number is positive, negative, or zero, and print the result.", input: "Input: 5", output: "Positive" },
+            { id: 5, category: "Basic Syntax & Control Flow", question: "Write a program that reads an integer and checks if it's an even or an odd number. Print 'Even' or 'Odd' accordingly.", input: "Input: 4", output: "Even" },
+            { id: 6, category: "Basic Syntax & Control Flow", question: "Get two numbers from the user and print the larger of the two.", input: "Num1: 7\\nNum2: 12", output: "12" },
+            { id: 7, category: "Basic Syntax & Control Flow", question: "Accept three numbers from the user and find the largest among them.", input: "Num1: 15\\nNum2: 8\\nNum3: 20", output: "20" },
+            { id: 8, category: "Basic Syntax & Control Flow", question: "Read a single character from the user. Determine if it's a vowel (a, e, i, o, u, case-insensitive) or a consonant.", input: "Input: 'A'", output: "Vowel" },
+            { id: 9, category: "Basic Syntax & Control Flow", question: "Build a basic calculator that takes two numbers and an operator (+, -, *, /) from the user. Perform the operation and display the result. Use `if-else if-else` or `switch` statement.", input: "Num1: 10\\nOperator: *\\nNum2: 4", output: "40" },
+            { id: 10, category: "Basic Syntax & Control Flow", question: "Write a program that takes a student's percentage score as input. Assign and print a grade based on the following scale: A (90-100), B (80-89), C (70-79), D (60-69), F (below 60).", input: "Score: 85", output: "Grade: B" },
+            { id: 11, category: "Basic Syntax & Control Flow", question: "Ask the user to enter a number (1-7). Using a `switch` statement, print the corresponding day of the week (e.g., 1 for Monday, 2 for Tuesday). Handle invalid input.", input: "Input: 3", output: "Wednesday" },
+            { id: 12, category: "Basic Syntax & Control Flow", question: "Write a program that takes a year as input and determines if it's a leap year. (A leap year is divisible by 4, but not by 100, unless it's also divisible by 400).", input: "Year: 2024", output: "2024 is a leap year." },
+            { id: 13, category: "Basic Syntax & Control Flow", question: "Create a program that converts USD to INR. Ask the user for the amount in USD and a fixed exchange rate (e.g., 1 USD = 83.50 INR). Display the equivalent amount in INR.", input: "USD: 10\\nRate: 83.50", output: "INR: 835.00" },
+            { id: 14, category: "Basic Syntax & Control Flow", question: "Write a program that reads an integer and uses the ternary operator (`?:`) to print 'Positive', 'Negative', or 'Zero'.", input: "Input: -7", output: "Negative" },
+            { id: 15, category: "Basic Syntax & Control Flow", question: "Calculate the ticket price based on age: 0-5 (Free), 6-12 ($5), 13-65 ($10), 66+ ($7). Get age as input and print the price.", input: "Age: 45", output: "Ticket Price: $10" },
+
+            // Category 2: Loops & Iteration (Problems 16-30)
+            { id: 16, category: "Loops & Iteration", question: "Write a C# program that uses a `for` loop to print numbers from 1 to 10.", input: "None", output: "1 2 3 4 5 6 7 8 9 10" },
+            { id: 17, category: "Loops & Iteration", question: "Modify the previous program to print numbers from 10 down to 1.", input: "None", output: "10 9 8 7 6 5 4 3 2 1" },
+            { id: 18, category: "Loops & Iteration", question: "Calculate and print the sum of the first `n` natural numbers, where `n` is provided by the user.", input: "n: 5", output: "Sum: 15" },
+            { id: 19, category: "Loops & Iteration", question: "Compute the factorial of a given non-negative integer `n` using a `for` loop. (Factorial of 5 is 5*4*3*2*1).", input: "n: 5", output: "Factorial: 120" },
+            { id: 20, category: "Loops & Iteration", question: "Generate and print the first `n` terms of the Fibonacci series (0, 1, 1, 2, 3, 5, ...). `n` is provided by the user.", input: "n: 7", output: "0 1 1 2 3 5 8" },
+            { id: 21, category: "Loops & Iteration", question: "Use a `while` loop to print all even numbers between 1 and 20.", input: "None", output: "2 4 6 8 10 12 14 16 18 20" },
+            { id: 22, category: "Loops & Iteration", question: "Take an integer as input and count the number of digits in it. (e.g., 12345 has 5 digits).", input: "Input: 12345", output: "Number of digits: 5" },
+            { id: 23, category: "Loops & Iteration", question: "Read an integer from the user and print its reverse. (e.g., reverse of 123 is 321).", input: "Input: 123", output: "321" },
+            { id: 24, category: "Loops & Iteration", question: "Check if a given number is a palindrome (reads the same forwards and backwards, e.g., 121).", input: "Input: 121", output: "121 is a palindrome." },
+            { id: 25, category: "Loops & Iteration", question: "Calculate the sum of the digits of a given integer. (e.g., sum of digits of 123 is 1+2+3=6).", input: "Input: 123", output: "Sum of digits: 6" },
+            { id: 26, category: "Loops & Iteration", question: "Print the multiplication table for a given number `n` up to 10. (e.g., for 5: 5x1=5, 5x2=10, ...).", input: "n: 5", output: "5x1=5\\n5x2=10\\n..." },
+            { id: 27, category: "Loops & Iteration", question: "Print a simple pyramid pattern of asterisks based on user-specified number of rows:\\n```\\n*\\n**\\n***\\n****\\n```", input: "Rows: 4", output: "*\\n**\\n***\\n****" },
+            { id: 28, category: "Loops & Iteration", question: "Print a number pyramid pattern:\\n```\\n1\\n12\\n123\\n1234\\n```", input: "Rows: 4", output: "1\\n12\\n123\\n1234" },
+            { id: 29, category: "Loops & Iteration", question: "Write a program that iterates from 1 to 10. If the number 7 is encountered, stop the loop using `break`.", input: "None", output: "1 2 3 4 5 6" },
+            { id: 30, category: "Loops & Iteration", question: "Write a program that iterates from 1 to 10. Print all numbers except 5 using `continue`.", input: "None", output: "1 2 3 4 6 7 8 9 10" },
+
+            // Category 3: Arrays & Collections (Problems 31-50)
+            { id: 31, category: "Arrays & Collections", question: "Declare an integer array of size 5, initialize it with some values, and print each element using a `for` loop.", input: "None", output: "Array elements: 10 20 30 40 50" },
+            { id: 32, category: "Arrays & Collections", question: "Create an integer array and calculate the sum of all its elements.", input: "arr = {1, 2, 3}", output: "Sum: 6" },
+            { id: 33, category: "Arrays & Collections", question: "Find the average of all numbers in an integer array.", input: "arr = {10, 20, 30}", output: "Average: 20" },
+            { id: 34, category: "Arrays & Collections", question: "Given an integer array, find and print the largest element.", input: "arr = {5, 1, 9, 3, 7}", output: "Largest: 9" },
+            { id: 35, category: "Arrays & Collections", question: "Given an integer array, find and print the smallest element.", input: "arr = {5, 1, 9, 3, 7}", output: "Smallest: 1" },
+            { id: 36, category: "Arrays & Collections", question: "Take an integer array and a target value from the user. Check if the target value exists in the array. If found, print its index; otherwise, print 'Not found.'", input: "arr = {10, 20, 30}, Target: 20", output: "Found at index: 1" },
+            { id: 37, category: "Arrays & Collections", question: "Create two integer arrays. Copy all elements from the first array to the second array.", input: "arr1 = {1, 2, 3}", output: "arr2 = {1, 2, 3}" },
+            { id: 38, category: "Arrays & Collections", question: "Reverse the elements of an integer array in-place.", input: "arr = {1, 2, 3, 4}", output: "Reversed arr = {4, 3, 2, 1}" },
+            { id: 39, category: "Arrays & Collections", question: "Sort an integer array in ascending order without using built-in `Array.Sort()`. Implement a simple sorting algorithm (e.g., Bubble Sort or Selection Sort).", input: "arr = {5, 2, 8, 1}", output: "Sorted arr = {1, 2, 5, 8}" },
+            { id: 40, category: "Arrays & Collections", question: "Sort an integer array in descending order using your chosen sorting algorithm.", input: "arr = {5, 2, 8, 1}", output: "Sorted arr = {8, 5, 2, 1}" },
+            { id: 41, category: "Arrays & Collections", question: "Given an integer array, count how many even numbers and how many odd numbers it contains.", input: "arr = {1, 2, 3, 4, 5}", output: "Even: 2, Odd: 3" },
+            { id: 42, category: "Arrays & Collections", question: "Given two already sorted integer arrays, merge them into a single sorted array.", input: "arr1 = {1, 3, 5}, arr2 = {2, 4, 6}", output: "Merged arr = {1, 2, 3, 4, 5, 6}" },
+            { id: 43, category: "Arrays & Collections", question: "Create a new array containing only the unique elements from an original array that might have duplicates. (Assume small range/simple approach).", input: "arr = {1, 2, 2, 3, 1}", output: "Unique arr = {1, 2, 3}" },
+            { id: 44, category: "Arrays & Collections", question: "Implement matrix addition for two 2x2 integer matrices. Get matrix elements from the user.", input: "Matrix A: [[1,2],[3,4]], Matrix B: [[5,6],[7,8]]", output: "Result: [[6,8],[10,12]]" },
+            { id: 45, category: "Arrays & Collections", question: "Implement matrix multiplication for two 2x2 integer matrices. Get matrix elements from the user.", input: "Matrix A: [[1,2],[3,4]], Matrix B: [[5,6],[7,8]]", output: "Result: [[19,22],[43,50]]" },
+            { id: 46, category: "Arrays & Collections", question: "Declare and initialize a jagged array of integers. Print its elements. For example, `int[][] jaggedArr = new int[3][]; jaggedArr[0] = new int[] {1, 2};`.", input: "None", output: "Jagged Array:\\n1 2\\n3 4 5\\n6" },
+            { id: 47, category: "Arrays & Collections", question: "Demonstrate adding, removing, and iterating over elements in a non-generic `ArrayList`.", input: "None", output: "Elements: A B C" },
+            { id: 48, category: "Arrays & Collections", question: "Demonstrate adding, removing, searching, and iterating over elements in a generic `List<string>`.", input: "None", output: "Elements: Apple Banana" },
+            { id: 49, category: "Arrays & Collections", question: "Create a `Dictionary<string, int>` to store names and ages. Add a few entries, access an entry by key, and iterate through all key-value pairs.", input: "None", output: "Alice: 30\\nBob: 25" },
+            { id: 50, category: "Arrays & Collections", question: "Simulate a basic queue using `Queue<int>`. Enqueue several numbers, then dequeue and print them.", input: "Enqueue: 1, 2, 3", output: "Dequeued: 1\\nDequeued: 2\\nDequeued: 3" },
+            { id: 51, category: "Arrays & Collections", question: "Simulate a basic stack using `Stack<char>`. Push several characters, then pop and print them.", input: "Push: A, B, C", output: "Popped: C\\nPopped: B\\nPopped: A" },
+
+            // Category 4: Strings & Characters (Problems 52-65)
+            { id: 52, category: "Strings & Characters", question: "Take a string as input and print its length.", input: "Input: 'Hello'", output: "Length: 5" },
+            { id: 53, category: "Strings & Characters", question: "Read two strings from the user and concatenate them, then print the result.", input: "String1: 'Hello'\\nString2: 'World'", output: "HelloWorld" },
+            { id: 54, category: "Strings & Characters", question: "Check if a given string contains a specific substring.", input: "String: 'programming', Substring: 'gram'", output: "Contains 'gram': True" },
+            { id: 55, category: "Strings & Characters", question: "Write a program that counts the number of vowels and consonants in a given string (case-insensitive).", input: "Input: 'Programming'", output: "Vowels: 3, Consonants: 8" },
+            { id: 56, category: "Strings & Characters", question: "Reverse a given string. Do not use built-in `string.Reverse()`.", input: "Input: 'Csharp'", output: "praahsC" },
+            { id: 57, category: "Strings & Characters", question: "Determine if a given string is a palindrome (e.g., 'madam', 'level'). Ignore case and non-alphanumeric characters for a more robust check (optional advanced).", input: "Input: 'Madam'", output: "Palindrome: True" },
+            { id: 58, "category": "Strings & Characters", "question": "Given a sentence and a target word, count how many times the target word appears in the sentence (case-insensitive).", "input": "Sentence: 'Hello world hello', Word: 'hello'", "output": "Count: 2" },
+            { id: 59, category: "Strings & Characters", question: "Replace all occurrences of a specific character in a string with another character.", input: "String: 'banana', Old Char: 'a', New Char: 'o'", output: "bonono" },
+            { id: 60, category: "Strings & Characters", question: "Remove all whitespace characters from a given string.", input: "Input: 'Hello World'", output: "HelloWorld" },
+            { id: 61, category: "Strings & Characters", question: "Take a string and convert it entirely to uppercase, then entirely to lowercase.", input: "Input: 'Test String'", output: "TEST STRING\\ntest string" },
+            { id: 62, category: "Strings & Characters", question: "Demonstrate how to remove leading and trailing whitespace from a string.", input: "Input: '  Trim Me  '", output: "'Trim Me'" },
+            { id: 63, category: "Strings & Characters", question: "Count the number of words in a given sentence. (Assume words are separated by single spaces).", input: "Input: 'This is a test'", output: "Word count: 4" },
+            { id: 64, category: "Strings & Characters", question: "Given a string, count the frequency of each character (e.g., 'hello' -> h:1, e:1, l:2, o:1).", input: "Input: 'hello'", output: "h:1 e:1 l:2 o:1" },
+            { id: 65, category: "Strings & Characters", question: "Determine if two strings are anagrams of each other (contain the same characters with the same frequencies, regardless of order, e.g., 'listen' and 'silent').", input: "String1: 'listen', String2: 'silent'", output: "Anagrams: True" },
+
+            // Category 5: Functions / Methods (Problems 66-75)
+            { id: 66, category: "Functions / Methods", question: "Create a method named `PrintGreeting` that prints 'Hello from a method!' to the console. Call this method from `Main`.", input: "None", output: "Hello from a method!" },
+            { id: 67, category: "Functions / Methods", question: "Write a method `AddNumbers(int a, int b)` that takes two integers as parameters and prints their sum. Call it with different values.", input: "Call AddNumbers(5, 3)", output: "Sum: 8" },
+            { id: 68, category: "Functions / Methods", question: "Create a method `Multiply(int x, int y)` that takes two integers and returns their product. Store the result in a variable in `Main` and print it.", input: "Call Multiply(4, 6)", output: "Product: 24" },
+            { id: 69, category: "Functions / Methods", question: "Write two methods named `Area`. One takes `(int side)` and calculates the area of a square. The other takes `(int length, int width)` and calculates the area of a rectangle. Demonstrate calling both.", input: "Area(5)\\nArea(4, 6)", output: "Square Area: 25\\nRectangle Area: 24" },
+            { id: 70, category: "Functions / Methods", question: "Create a method `Increment(int num)` that attempts to increment `num`. Show that the original variable in `Main` is unchanged. Then, create a method `IncrementRef(ref int num)` and demonstrate that `ref` changes the original variable.", input: "Initial num: 10", output: "After Increment (value): 10\\nAfter IncrementRef (value): 11" },
+            { id: 71, category: "Functions / Methods", question: "Write a method `Divide(int a, int b, out int remainder)` that performs integer division of `a` by `b` and returns the quotient, while also returning the `remainder` using an `out` parameter. Handle division by zero.", input: "Divide(10, 3)", output: "Quotient: 3, Remainder: 1" },
+            { id: 72, category: "Functions / Methods", question: "Implement the factorial calculation using a recursive method.", input: "Factorial(4)", output: "24" },
+            { id: 73, category: "Functions / Methods", question: "Implement the Fibonacci series generation using a recursive method. (Be aware of performance for large `n`).", input: "Fibonacci(6)", output: "8" },
+            { id: 74, category: "Functions / Methods", question: "Write a method `IsPrime(int number)` that returns `true` if the number is prime, `false` otherwise. Use this method to print all prime numbers up to a given limit.", input: "Limit: 10", output: "Prime numbers up to 10: 2 3 5 7" },
+            { id: 75, category: "Functions / Methods", question: "Create a method `CalculatePower(int baseNum, int exponent)` that computes `baseNum` raised to the power of `exponent` using a loop.", input: "CalculatePower(2, 3)", output: "8" },
+
+            // Category 6: Object-Oriented Programming (OOP) - Basics (Problems 76-85)
+            { id: 76, category: "Object-Oriented Programming (OOP) - Basics", question: "Create a `Person` class with properties `Name` (string) and `Age` (int). Create an object of `Person`, set its properties, and print them.", input: "None", output: "Name: John, Age: 30" },
+            { id: 77, category: "Object-Oriented Programming (OOP) - Basics", question: "Add a constructor to the `Person` class that initializes `Name` and `Age` when a `Person` object is created.", input: "new Person('Jane', 25)", output: "Name: Jane, Age: 25" },
+            { id: 78, category: "Object-Oriented Programming (OOP) - Basics", question: "Add a method `Introduce()` to the `Person` class that prints 'Hi, my name is [Name] and I am [Age] years old.' Call this method using your `Person` object.", input: "person.Introduce()", output: "Hi, my name is Alice and I am 30 years old." },
+            { id: 79, category: "Object-Oriented Programming (OOP) - Basics", question: "Modify the `Person` class to use private fields (`_name`, `_age`) and public properties (`Name`, `Age`) with `get` and `set` accessors. Add validation (e.g., age cannot be negative).", input: "person.Age = -5", output: "Error: Age cannot be negative." },
+            { id: 80, category: "Object-Oriented Programming (OOP) - Basics", question: "Create a `Calculator` class with static methods `Add`, `Subtract`, `Multiply`, `Divide`. Demonstrate calling these methods without creating an object of `Calculator`.", input: "Calculator.Add(5, 3)", output: "8" },
+            { id: 81, category: "Object-Oriented Programming (OOP) - Basics", question: "Create a `Vehicle` base class with properties like `Make`, `Model`, and a method `StartEngine()`. Create a `Car` class that inherits from `Vehicle` and adds a `NumberOfDoors` property. Demonstrate creating `Car` object and calling inherited methods.", input: "new Car('Toyota', 'Camry', 4).StartEngine()", output: "Engine started for Toyota Camry." },
+            { id: 82, category: "Object-Oriented Programming (OOP) - Basics", question: "In the `Vehicle` and `Car` example, make `StartEngine()` `virtual` in `Vehicle` and `override` it in `Car` to print a car-specific message.", input: "new Car('Honda', 'Civic', 4).StartEngine()", output: "Car engine started: Honda Civic." },
+            { id: 83, category: "Object-Oriented Programming (OOP) - Basics", question: "Create an `abstract` class `Shape` with an `abstract` method `CalculateArea()`. Create concrete classes `Circle` and `Rectangle` that inherit from `Shape` and implement `CalculateArea()`.", input: "new Circle(5).CalculateArea()\\nnew Rectangle(4, 6).CalculateArea()", output: "Circle Area: 78.54\\nRectangle Area: 24" },
+            { id: 84, category: "Object-Oriented Programming (OOP) - Basics", question: "Define an `interface` `IDrawable` with a method `Draw()`. Implement this interface in `Circle` and `Rectangle` classes. Demonstrate drawing different shapes through the interface.", input: "IDrawable circle = new Circle(3); circle.Draw()", output: "Drawing a Circle." },
+            { id: 85, category: "Object-Oriented Programming (OOP) - Basics", question: "Create a `List<Shape>` or `List<IDrawable>`. Add objects of `Circle` and `Rectangle` to it. Loop through the list and call `CalculateArea()` or `Draw()` for each object.", input: "None", output: "Circle Area: X\\nRectangle Area: Y" },
+
+            // Category 7: Error Handling & File I/O (Problems 86-90)
+            { id: 86, category: "Error Handling & File I/O", question: "Write a program that asks the user for two numbers and performs division. Use a `try-catch` block to handle `DivideByZeroException` and `FormatException` (if non-numeric input is given).", input: "Num1: 10\\nNum2: 0", output: "Error: Cannot divide by zero." },
+            { id: 87, category: "Error Handling & File I/O", question: "Refine the previous program to have separate `catch` blocks for `DivideByZeroException` and `FormatException`, providing specific error messages for each.", input: "Num1: 'abc'\\nNum2: 5", output: "Error: Invalid number format." },
+            { id: 88, category: "Error Handling & File I/O", question: "Demonstrate the use of a `finally` block in conjunction with `try-catch`. Show that code in `finally` always executes, regardless of whether an exception occurred.", input: "None", output: "Inside try...\\nFinally block executed." },
+            { id: 89, category: "Error Handling & File I/O", question: "Write a program that asks the user for a line of text and saves it to a file named 'mydata.txt'.", input: "Text: 'Hello File!'", output: "Text saved to mydata.txt" },
+            { id: 90, category: "Error Handling & File I/O", question: "Read the content from the 'mydata.txt' file created previously and print it to the console. Handle `FileNotFoundException`.", input: "None (file exists)", output: "Content of file: Hello File!" },
+
+            // Category 8: Advanced Topics & Algorithms (Problems 91-100)
+            { id: 91, category: "Advanced Topics & Algorithms", question: "Implement the Bubble Sort algorithm to sort an array of integers in ascending order.", input: "arr = {5, 1, 4, 2, 8}", output: "Sorted arr: {1, 2, 4, 5, 8}" },
+            { id: 92, category: "Advanced Topics & Algorithms", question: "Implement the Selection Sort algorithm to sort an array of integers in ascending order.", input: "arr = {64, 25, 12, 22, 11}", output: "Sorted arr: {11, 12, 22, 25, 64}" },
+            { id: 93, category: "Advanced Topics & Algorithms", question: "Implement the Insertion Sort algorithm to sort an array of integers in ascending order.", input: "arr = {12, 11, 13, 5, 6}", output: "Sorted arr: {5, 6, 11, 12, 13}" },
+            { id: 94, category: "Advanced Topics & Algorithms", question: "Implement the Binary Search algorithm to efficiently find an element in a **sorted** array.", input: "arr = {2, 5, 8, 12, 16}, Target: 12", output: "Element found at index: 3" },
+            { id: 95, category: "Advanced Topics & Algorithms", question: "Write a program that finds and prints all prime numbers within a given range (e.g., from 1 to 100).", input: "Range: 1 to 20", output: "Prime numbers: 2 3 5 7 11 13 17 19" },
+            { id: 96, category: "Advanced Topics & Algorithms", question: "Calculate the GCD of two numbers using the Euclidean algorithm.", input: "GCD(48, 18)", output: "GCD: 6" },
+            { id: 97, category: "Advanced Topics & Algorithms", question: "Calculate the LCM of two numbers. (Hint: LCM(a,b) = |a*b| / GCD(a,b)).", input: "LCM(4, 6)", output: "LCM: 12" },
+            { id: 98, category: "Advanced Topics & Algorithms", question: "Create a simple number guessing game where the computer picks a random number between 1 and 100, and the user tries to guess it. Provide hints ('too high', 'too low').", input: "User guesses: 50, 75, 60 (if target is 60)", output: "Too high!\\nToo low!\\nCorrect! You guessed it in 3 tries." },
+            { id: 99, category: "Advanced Topics & Algorithms", question: "Write a program that converts a decimal number to its binary representation.", input: "Decimal: 13", output: "Binary: 1101" },
+            { id: 100, category: "Advanced Topics & Algorithms", question: "Given a string containing only '(', ')', '{', '}', '[', ']', determine if the input string is valid. An input string is valid if: Open brackets must be closed by the same type of brackets. Open brackets must be closed in the correct order. Every close bracket has a corresponding open bracket of the same type.", input: "Input: '([{}])'", output: "Valid: True" },
+
+            // Intermediate Level Questions (from previous responses, re-indexed and added to the list)
+            // Category 1: Arrays & Collections (Intermediate) (Problems 1-15 from intermediate list, now 101-115)
+            { id: 101, category: "Arrays & Collections (Intermediate)", question: "Given an integer array, find the second largest element without sorting the entire array.", input: "int[] arr = { 10, 5, 20, 15, 25 };", output: "20" },
+            { id: 102, category: "Arrays & Collections (Intermediate)", question: "Write a program to count the frequency of each element in an integer array. Use a `Dictionary` or similar approach.", input: "int[] arr = { 1, 2, 2, 3, 1, 4, 2 };", output: "1: 2 times\\n2: 3 times\\n3: 1 time\\n4: 1 time" },
+            { id: 103, category: "Arrays & Collections (Intermediate)", question: "Given an array and a number `k`, rotate the array elements to the right by `k` positions. (e.g., `[1, 2, 3, 4, 5]` rotated by 2 becomes `[4, 5, 1, 2, 3]`).", input: "int[] arr = { 1, 2, 3, 4, 5 }; int k = 2;", output: "[4, 5, 1, 2, 3]" },
+            { id: 104, category: "Arrays & Collections (Intermediate)", question: "Given an array containing `n` distinct numbers taken from `0, 1, 2, ..., n`, find the one number that is missing from the array.", input: "int[] arr = { 3, 0, 1 };", output: "2" },
+            { id: 105, category: "Arrays & Collections (Intermediate)", question: "Given a sorted array, remove the duplicates in-place such that each element appears only once and returns the new length. You cannot use extra space for another array.", input: "int[] nums = { 1, 1, 2, 2, 3, 4, 4, 5 };", output: "5 (array becomes [1, 2, 3, 4, 5, _, _, _])" },
+            { id: 106, category: "Arrays & Collections (Intermediate)", question: "Given an unsorted array of non-negative integers, find a continuous sub-array which adds to a given sum.", input: "int[] arr = { 1, 4, 20, 3, 10, 5 }; int sum = 33;", output: "Sum found between indexes 2 and 4 (elements 20, 3, 10)" },
+            { id: 107, category: "Arrays & Collections (Intermediate)", question: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. Assume that each input would have exactly one solution, and you may not use the same element twice.", input: "int[] nums = { 2, 7, 11, 15 }; int target = 9;", output: "[0, 1]" },
+            { id: 108, category: "Arrays & Collections (Intermediate)", question: "Given two integer arrays, return an array of their intersection. Each element in the result must be unique.", input: "int[] nums1 = { 1, 2, 2, 1 }; int[] nums2 = { 2, 2 };", output: "[2]" },
+            { id: 109, category: "Arrays & Collections (Intermediate)", question: "Given two integer arrays, return an array of their union. Each element in the result must be unique.", input: "int[] nums1 = { 1, 2, 2, 3 }; int[] nums2 = { 2, 3, 4, 5 };", output: "[1, 2, 3, 4, 5]" },
+            { id: 110, category: "Arrays & Collections (Intermediate)", question: "Calculate the sum of the main diagonal and anti-diagonal elements of a square matrix. For odd-sized matrices, the center element should only be counted once.", input: "int[,] matrix = {{1,2,3},{4,5,6},{7,8,9}};", output: "Main Diagonal Sum: 15, Anti-Diagonal Sum: 15 (Total unique sum: 21)" },
+            { id: 111, category: "Arrays & Collections (Intermediate)", question: "Given a matrix (2D array), return its transpose. The transpose of a matrix flips the matrix over its main diagonal, switching the row and column indices of the matrix.", input: "int[,] matrix = {{1,2,3},{4,5,6}};", output: "{{1,4},{2,5},{3,6}}" },
+            { id: 112, category: "Arrays & Collections (Intermediate)", question: "Given an unsorted array and an integer `n`, find the Nth smallest element in the array.", input: "int[] arr = { 7, 10, 4, 3, 20, 15 }; int n = 3;", output: "7" },
+            { id: 113, category: "Arrays & Collections (Intermediate)", question: "Given an array, count the number of inversions. An inversion is a pair of indices `(i, j)` such that `i < j` and `arr[i] > arr[j]`.", input: "int[] arr = { 2, 4, 1, 3, 5 };", output: "3" },
+            { id: 114, category: "Arrays & Collections (Intermediate)", question: "An element is a leader if it is greater than all the elements to its right. The rightmost element is always a leader. Find all leaders in a given array.", input: "int[] arr = { 16, 17, 4, 3, 5, 2 };", output: "17, 5, 2" },
+            { id: 115, category: "Arrays & Collections (Intermediate)", question: "Find the contiguous sub-array within an array (containing at least one number) which has the largest sum.", input: "int[] arr = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };", output: "6" },
+
+            // Category 2: Strings & Characters (Intermediate) (Problems 16-25 from intermediate list, now 116-125)
+            { id: 116, category: "Strings & Characters (Intermediate)", question: "Given a string, find the first non-repeating character in it and return its index. If it doesn't exist, return -1.", input: "'leetcode'", output: "0" },
+            { id: 117, category: "Strings & Characters (Intermediate)", question: "Given two strings, remove all characters from the first string that are present in the second string.", input: "s1 = 'geeksforgeeks', s2 = 'mask'", output: "'geeforgee'" },
+            { id: 118, category: "Strings & Characters (Intermediate)", question: "Given a string, check if it is an anagram of a palindrome. (A palindrome is a word or phrase that reads the same forwards and backwards. An anagram is a word or phrase formed by rearranging the letters of another).", input: "'aabbc'", output: "True" },
+            { id: 119, category: "Strings & Characters (Intermediate)", question: "Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string ''.", input: "string[] strs = { 'flower', 'flow', 'flight' };", output: "'fl'" },
+            { id: 120, category: "Strings & Characters (Intermediate)", question: "Implement run-length encoding. For example, 'AAABBC' should become 'A3B2C1'.", input: "'AAABBCDDD'", output: "'A3B2C1D3'" },
+            { id: 121, category: "Strings & Characters (Intermediate)", question: "Generate all permutations of a given string. (For short strings due to complexity).", input: "'ABC'", output: "ABC, ACB, BAC, BCA, CAB, CBA (order may vary)" },
+            { id: 122, category: "Strings & Characters (Intermediate)", question: "Given a string, determine if it is a valid IPv4 address (simplified criteria: four numbers separated by dots, each number between 0 and 255 inclusive, no leading zeros for numbers > 0, no extra characters).", input: "'192.168.1.1'", output: "True" },
+            { id: 123, category: "Strings & Characters (Intermediate)", question: "Given an array of strings, group anagrams together. You can return the answer in any order.", input: "string[] strs = { 'eat', 'tea', 'tan', 'ate', 'nat', 'bat' };", output: "[['ate','eat','tea'], ['nat','tan'], ['bat']]" },
+            { id: 124, category: "Strings & Characters (Intermediate)", question: "Given a string `s`, return the longest palindromic substring in `s`.", input: "'babad'", output: "'bab'" },
+            { id: 125, category: "Strings & Characters (Intermediate)", question: "Implement a method to perform basic string compression using the counts of repeated characters. For example, the string 'aabcccccaaa' would become 'a2b1c5a3'. If the 'compressed' string would not become smaller than the original string, your method should return the original string.", input: "'aabcccccaaa'", output: "'a2b1c5a3'" },
+
+            // Category 3: Object-Oriented Programming (OOP) - Intermediate (Problems 26-35 from intermediate list, now 126-135)
+            { id: 126, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Create a custom exception class (e.g., `InvalidAgeException`). Implement a `Person` class where setting a negative age throws this custom exception. Demonstrate catching it in `Main`.", input: "Attempt to set age = -5", output: "Caught InvalidAgeException: Age cannot be negative." },
+            { id: 127, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Demonstrate the use of the `sealed` keyword for a class (cannot be inherited) and a method (cannot be overridden). Explain when it's useful.", input: "None", output: "Code demonstrating sealed class/method" },
+            { id: 128, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Write an extension method for the `string` class called `WordCount()` that returns the number of words in the string.", input: "string sentence = 'This is a test sentence.';", output: "5" },
+            { id: 129, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Create a class with a static constructor that initializes a static counter. Demonstrate how it behaves (executes once, before any instance creation or static member access).", input: "None", output: "Static constructor called.\\nInstance created.\\nCounter: 1" },
+            { id: 130, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Design a class (e.g., `CarBuilder`) that allows for method chaining to configure an object before creation (e.g., `new CarBuilder().SetMake('Toyota').SetModel('Camry').SetYear(2023).Build();`).", input: "None", output: "Code demonstrating method chaining" },
+            { id: 131, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Create a `ShoppingCart` class that allows accessing `Product` objects by their name (string) using an indexer, similar to how you would access elements in an array or dictionary (`cart['Laptop']`).", input: "cart['Laptop']", output: "Product object for Laptop" },
+            { id: 132, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Create a `Vector` class with `X` and `Y` properties. Overload the `+` operator to perform vector addition (add corresponding `X` and `Y` components).", input: "Vector v1 = new Vector(1, 2); Vector v2 = new Vector(3, 4); Vector v3 = v1 + v2;", output: "v3.X = 4, v3.Y = 6" },
+            { id: 133, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Demonstrate the use of `partial` keyword to split a class definition across multiple files (conceptually, just show two `partial class` definitions in one file). Also, briefly explain `partial methods`.", input: "None", output: "Code demonstrating partial class" },
+            { id: 134, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Define a simple delegate for a method that takes no parameters and returns void. Declare an event based on this delegate in a class. Raise the event and demonstrate subscribing a method to it.", input: "None", output: "Event handler executed." },
+            { id: 135, category: "Object-Oriented Programming (OOP) - Intermediate", question: "Create a simple generic class `Box<T>` that can hold any type of item. It should have methods to `SetItem(T item)` and `GetItem()`. Demonstrate its use with `Box<int>` and `Box<string>`.", input: "Box<int> intBox = new Box<int>(); intBox.SetItem(10);", output: "Item in intBox: 10" },
+
+            // Category 4: Algorithms & Data Structures (Intermediate) (Problems 36-50 from intermediate list, now 136-150)
+            { id: 136, category: "Algorithms & Data Structures (Intermediate)", question: "Implement the Merge Sort algorithm to sort an array of integers.", input: "int[] arr = { 38, 27, 43, 3, 9, 82, 10 };", output: "[3, 9, 10, 27, 38, 43, 82]" },
+            { id: 137, category: "Algorithms & Data Structures (Intermediate)", question: "Implement the Quick Sort algorithm to sort an array of integers.", input: "int[] arr = { 10, 80, 30, 90, 40, 50, 70 };", output: "[10, 30, 40, 50, 70, 80, 90]" },
+            { id: 138, category: "Algorithms & Data Structures (Intermediate)", question: "Implement a Queue data structure using two stacks.", input: "Enqueue(1), Enqueue(2), Dequeue()", output: "1" },
+            { id: 139, category: "Algorithms & Data Structures (Intermediate)", question: "Implement a Stack data structure using two queues.", input: "Push(1), Push(2), Pop()", output: "2" },
+            { id: 140, category: "Algorithms & Data Structures (Intermediate)", question: "Given a sequence of characters (simulated as an array for simplicity, as actual linked lists are more advanced), determine if it forms a palindrome.", input: "char[] list = {'R', 'A', 'C', 'E', 'C', 'A', 'R'};", output: "True" },
+            { id: 141, category: "Algorithms & Data Structures (Intermediate)", question: "Given a string `text` and a string `pattern`, find the smallest substring in `text` that contains all characters of `pattern` (characters in pattern don't need to be unique).", input: "text = 'ADOBECODEBANC', pattern = 'ABC'", output: "'BANC'" },
+            { id: 142, category: "Algorithms & Data Structures (Intermediate)", question: "You are given an array `prices` where `prices[i]` is the price of a given stock on the `i`-th day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit. If you cannot achieve any profit, return 0.", input: "int[] prices = { 7, 1, 5, 3, 6, 4 };", output: "5" },
+            { id: 143, category: "Algorithms & Data Structures (Intermediate)", question: "Given an unsorted array of integers, find the length of the longest increasing subsequence.", input: "int[] nums = { 10, 9, 2, 5, 3, 7, 101, 18 };", output: "4" },
+            { id: 144, category: "Algorithms & Data Structures (Intermediate)", question: "Given a string `s` containing just the characters '(', ')', '{', '}', '[', ']', determine if the input string is valid.", input: "'()[]{}'", output: "True" },
+            { id: 145, category: "Algorithms & Data Structures (Intermediate)", question: "Given a 2D binary grid (matrix) of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.", input: "char[,] grid = {{'1','1','0','0','0'},{'1','1','0','0','0'},{'0','0','1','0','0'},{'0','0','0','1','1'}};", output: "3" },
+            { id: 146, category: "Algorithms & Data Structures (Intermediate)", question: "You are given an `n x n` 2D matrix representing an image. Rotate the image by 90 degrees (clockwise) in-place.", input: "int[,] matrix = {{1,2,3},{4,5,6},{7,8,9}};", output: "{{7,4,1},{8,5,2},{9,6,3}}" },
+            { id: 147, category: "Algorithms & Data Structures (Intermediate)", question: "Given an `m x n` grid, find the number of unique paths from the top-left corner `(0,0)` to the bottom-right corner `(m-1, n-1)`. You can only move down or right.", input: "m = 3, n = 7", output: "28" },
+            { id: 148, category: "Algorithms & Data Structures (Intermediate)", question: "Given an integer `n`, return `true` if it is a power of two. Otherwise, return `false`. An integer `n` is a power of two if there exists an integer `x` such that `n == 2^x`.", input: "16", output: "True" },
+            { id: 149, category: "Algorithms & Data Structures (Intermediate)", question: "A peak element is an element that is strictly greater than its neighbors. Given a 0-indexed integer array `nums`, find a peak element and return its index. If the array contains multiple peaks, return the index to any of the peaks.", input: "int[] nums = { 1, 2, 3, 1 };", output: "2" },
+            { id: 150, category: "Algorithms & Data Structures (Intermediate)", question: "You are given an integer array `height` of length `n`. There are `n` vertical lines drawn such that the two endpoints of the `i`-th line are `(i, 0)` and `(i, height[i])`. Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store.", input: "int[] height = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };", output: "49" },
+
+            // Category 5: General Logic & Problem Solving (Intermediate) (Problems 51-60 from intermediate list, now 151-160)
+            { id: 151, category: "General Logic & Problem Solving (Intermediate)", question: "Given an array `nums` containing `n + 1` integers where each integer is between `1` and `n` (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate number. You must solve the problem without modifying the array `nums` and uses only constant extra space.", input: "int[] nums = { 1, 3, 4, 2, 2 };", output: "2" },
+            { id: 152, category: "General Logic & Problem Solving (Intermediate)", question: "Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`. You must write an algorithm that runs in `O(n)` time and without using the division operation.", input: "int[] nums = { 1, 2, 3, 4 };", output: "[24, 12, 8, 6]" },
+            { id: 153, category: "General Logic & Problem Solving (Intermediate)", question: "Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements. You must do this in-place without making a copy of the array.", input: "int[] nums = { 0, 1, 0, 3, 12 };", output: "[1, 3, 12, 0, 0]" },
+            { id: 154, category: "General Logic & Problem Solving (Intermediate)", question: "Write a program that prints numbers from 1 to 100. But for multiples of three print 'Fizz' instead of the number and for the multiples of five print 'Buzz'. For numbers which are multiples of both three and five print 'FizzBuzz'. Implement this using a cleaner design (e.g., separate methods for checks or using `Func<int, string>`).", input: "Numbers 1 to 15", output: "1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz" },
+            { id: 155, category: "General Logic & Problem Solving (Intermediate)", question: "A pangram is a sentence containing every letter of the alphabet at least once. Write a program to check if a given string is a pangram.", input: "'The quick brown fox jumps over the lazy dog'", output: "True" },
+            { id: 156, category: "General Logic & Problem Solving (Intermediate)", question: "Given a string `s`, reverse the order of words. Each word is separated by a single space. You may assume no leading or trailing spaces.", input: "'the sky is blue'", output: "'blue is sky the'" },
+            { id: 157, category: "General Logic & Problem Solving (Intermediate)", question: "Given two strings, `s1` and `s2`, check if `s2` is a rotation of `s1` using only one call to a `substring` method (or equivalent string check).", input: "s1 = 'waterbottle', s2 = 'erbottlewat'", output: "True" },
+            { id: 158, category: "General Logic & Problem Solving (Intermediate)", question: "Given an integer `n`, return the number of trailing zeroes in `n!`.", input: "5", output: "1" },
+            { id: 159, category: "General Logic & Problem Solving (Intermediate)", question: "Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one. Your algorithm should have a linear runtime complexity and use only constant extra space.", input: "int[] nums = { 2, 2, 1 };", output: "1" },
+            { id: 160, category: "General Logic & Problem Solving (Intermediate)", question: "Given a sorted integer array `nums` that does not contain duplicates, where the range of elements is `[lower, upper]` inclusive, return its missing ranges.", input: "nums = [0, 1, 3, 50, 75], lower = 0, upper = 99", output: "['2', '4->49', '51->74', '76->99']" },
+
+            // Category 6: LINQ & Functional Programming Basics (Problems 61-70 from intermediate list, now 161-170)
+            { id: 161, category: "LINQ & Functional Programming Basics", question: "Given a list of `Product` objects (each with `Name`, `Price`, `Category`), use LINQ to: 1. Filter products where `Price` is greater than 50. 2. Select only the `Name` and `Price` of these products into an anonymous type.", input: "List<Product> products = [{Laptop, 1200, Electronics}, {Mouse, 25, Electronics}, {Keyboard, 75, Electronics}, {Book, 15, Books}];", output: "Name: Laptop, Price: 1200\\nName: Keyboard, Price: 75" },
+            { id: 162, category: "LINQ & Functional Programming Basics", question: "Group the `Product` objects from the previous question by `Category` and print the count of products in each category.", input: "Same products list as P161", output: "Electronics: 3 products\\nBooks: 1 product" },
+            { id: 163, category: "LINQ & Functional Programming Basics", question: "Sort the `Product` objects by `Price` in descending order, then by `Name` in ascending order for products with the same price.", input: "List<Product> products = [{Laptop, 1200, Electronics}, {Mouse, 25, Electronics}, {Keyboard, 75, Electronics}, {Book, 15, Books}, {Headphones, 75, Electronics}];", output: "Laptop (1200)\\nHeadphones (75)\\nKeyboard (75)\\nMouse (25)\\nBook (15)" },
+            { id: 164, category: "LINQ & Functional Programming Basics", question: "Calculate the total price, maximum price, minimum price, and average price of all products in the list.", input: "Same products list as P161", output: "Total Price: 1315\\nMax Price: 1200\\nMin Price: 15\\nAverage Price: 328.75" },
+            { id: 165, category: "LINQ & Functional Programming Basics", question: "Check if `All` products have a price greater than 10. Check if `Any` product has 'Electronics' as its category.", input: "Same products list as P161", output: "All products > 10: False\\nAny product is Electronics: True" },
+            { id: 166, category: "LINQ & Functional Programming Basics", question: "Given a list of integers with duplicates, use LINQ to get a new list containing only the distinct elements.", input: "List<int> numbers = { 1, 2, 2, 3, 4, 3, 5, 1 };", output: "[1, 2, 3, 4, 5]" },
+            { id: 167, category: "LINQ & Functional Programming Basics", question: "Given a list of `Department` objects, where each department has a `List<Employee>` (with `Name` property), use `SelectMany` to get a flat list of all employee names across all departments.", input: "Dept 'HR': [Emp 'Alice', Emp 'Bob']\\nDept 'IT': [Emp 'Charlie', Emp 'David']", output: "['Alice', 'Bob', 'Charlie', 'David']" },
+            { id: 168, category: "LINQ & Functional Programming Basics", question: "Given a list of strings, sort them by their length in ascending order, then alphabetically for strings of the same length.", input: "List<string> words = { 'apple', 'cat', 'banana', 'dog', 'ant' };", output: "['cat', 'dog', 'ant', 'apple', 'banana']" },
+            { id: 169, category: "LINQ & Functional Programming Basics", question: "Simulate paging for a list of products. Given a `pageSize` and `pageNumber`, return the products for that specific page.", input: "List of 10 products, pageSize = 3, pageNumber = 2", output: "Products 4, 5, 6" },
+            { id: 170, category: "LINQ & Functional Programming Basics", question: "Given a list of `Orders` (with `ProductId` and `Quantity`) and a list of `ProductInfo` objects (with `ProductId` and `ProductName`), join them to display `OrderId`, `ProductName`, and `Quantity`.", input: "Conceptual lists of Orders and ProductInfo", output: "Order ID: 101, Product: Laptop, Quantity: 2\\nOrder ID: 102, Product: Keyboard, Quantity: 1" },
+
+            // Category 7: Advanced Data Structures & Algorithms (Problems 71-85 from intermediate list, now 171-185)
+            { id: 171, category: "Advanced Data Structures & Algorithms", question: "Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).", input: "uint n = 11 (binary 1011)", output: "3" },
+            { id: 172, category: "Advanced Data Structures & Algorithms", question: "Given an array `nums` of size `n`, return the majority element. The majority element is the element that appears more than `n / 2` times. You may assume that the majority element always exists in the array.", input: "int[] nums = { 3, 2, 3 };", output: "3" },
+            { id: 173, category: "Advanced Data Structures & Algorithms", question: "Given an integer array `nums` and an integer `k`, return the `k`th largest element in the array. Note that it is the `k`th largest element in the sorted order, not the `k`th distinct element.", input: "int[] nums = { 3, 2, 1, 5, 6, 4 }; int k = 2;", output: "5" },
+            { id: 174, category: "Advanced Data Structures & Algorithms", question: "Given a string `s`, find the length of the longest substring without repeating characters.", input: "'abcabcbb'", output: "3" },
+            { id: 175, category: "Advanced Data Structures & Algorithms", question: "Given a string `s` consisting of lowercase English letters, return the first non-repeating character in it and return its index. If it does not exist, return -1.", input: "'leetcode'", output: "0" },
+            { id: 176, category: "Advanced Data Structures & Algorithms", question: "Given a string `s` and a dictionary of strings `wordDict`, return `true` if `s` can be segmented into a space-separated sequence of one or more dictionary words. The same word in the dictionary may be reused multiple times in the segmentation.", input: "s = 'leetcode', wordDict = ['leet', 'code']", output: "True" },
+            { id: 177, category: "Advanced Data Structures & Algorithms", question: "Given an `m x n` matrix, return all elements of the matrix in spiral order.", input: "int[,] matrix = {{1,2,3},{4,5,6},{7,8,9}};", output: "[1, 2, 3, 6, 9, 8, 7, 4, 5]" },
+            { id: 178, category: "Advanced Data Structures & Algorithms", question: "Given an integer `numRows`, return the first `numRows` of Pascal's triangle. In Pascal's triangle, each number is the sum of the two numbers directly above it.", input: "numRows = 5", output: "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]" },
+            { id: 179, category: "Advanced Data Structures & Algorithms", question: "Given an `m x n` integer matrix, if an element is 0, set its entire row and column to 0's. You must do this in-place.", input: "int[,] matrix = {{1,1,1},{1,0,1},{1,1,1}};", output: "{{1,0,1},{0,0,0},{1,0,1}}" },
+            { id: 180, category: "Advanced Data Structures & Algorithms", question: "Write an algorithm to determine if a number `n` is 'happy'. A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits. Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.", input: "19", output: "True" },
+            { id: 181, category: "Advanced Data Structures & Algorithms", question: "An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5. Given an integer `n`, return `true` if `n` is an ugly number.", input: "6", output: "True" },
+            { id: 182, category: "Advanced Data Structures & Algorithms", question: "Given your `CustomStack<T>` (or similar `CustomList<T>`), add a `Contains(T item)` method that checks if an item exists in the list.", input: "CustomList<string> myList; myList.Add('Apple'); myList.Contains('Apple')", output: "True" },
+            { id: 183, category: "Advanced Data Structures & Algorithms", question: "Find the smallest positive number that is evenly divisible by all of the numbers from 1 to `n`.", input: "n = 10", output: "2520" },
+            { id: 184, category: "Advanced Data Structures & Algorithms", question: "Implement the Sieve of Eratosthenes algorithm to find all prime numbers up to a given limit `n`.", input: "n = 30", output: "[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]" },
+            { id: 185, category: "Advanced Data Structures & Algorithms", question: "You are playing a game involving a circular array of non-zero integers `nums`. Each `nums[i]` denotes the number of steps to advance or go backward. A circular array loop is a sequence of indices `k_0, k_1, ..., k_{p-1}` such that each `nums[k_i]` has the same sign, and the cycle length is greater than 1.", input: "int[] nums = { 2, -1, 1, 2, 2 };", output: "True" },
+
+            // Category 8: Practical Applications & Utilities (Problems 86-100 from intermediate list, now 186-200)
+            { id: 186, category: "Practical Applications & Utilities", question: "Get the current date and time. Add 5 days and 3 hours to it. Subtract 2 months from the result. Print all steps in a readable format.", input: "Current Date/Time", output: "Current: YYYY-MM-DD HH:MM:SS\\nAfter +5 days, +3 hours: ...\\nAfter -2 months: ..." },
+            { id: 187, category: "Practical Applications & Utilities", question: "Use `System.Diagnostics.Stopwatch` to measure the execution time of a simple loop that counts from 1 to 1,000,000.", input: "None", output: "Loop execution time: X ms" },
+            { id: 188, "category": "Practical Applications & Utilities", "question": "Given a simple CSV string (e.g., 'Name,Age,City\\nAlice,30,New York\\nBob,25,London'), parse it into a list of objects or a structured collection (e.g., `List<Dictionary<string, string>>`).", "input": "string csvData = 'Name,Age,City\\nAlice,30,New York\\nBob,25,London';", "output": "[{Name:Alice, Age:30, City:New York}, {Name:Bob, Age:25, City:London}]" },
+            { id: 189, category: "Practical Applications & Utilities", question: "Create a simple static `Logger` class with methods like `LogInfo(string message)`, `LogWarning(string message)`, `LogError(string message)`. Each method should print the message along with a timestamp and the log level.", input: "Logger.LogInfo('Application started.');", output: "[INFO] [YYYY-MM-DD HH:MM:SS] Application started." },
+            { id: 190, category: "Practical Applications & Utilities", question: "Given a URL string (e.g., 'https://www.example.com/path/to/page?id=123&name=test#section'), extract the protocol, domain, path, query parameters (as a dictionary), and fragment.", input: "'https://www.example.com/path/to/page?id=123&name=test#section'", output: "Protocol: https\\nDomain: www.example.com\\nPath: /path/to/page\\nQuery Params: { id: '123', name: 'test' }\\nFragment: section" },
+            { id: 191, category: "Practical Applications & Utilities", question: "Write a function `IsValidEmail(string email)` that uses regular expressions to validate if a given string is a basic valid email address format. (e.g., `name@domain.com`).", input: "'test@example.com'", output: "True" },
+            { id: 192, category: "Practical Applications & Utilities", question: "Using `System.Text.Json` (or `Newtonsoft.Json`), serialize a simple C# object (e.g., an instance of your `Person` class) into a JSON string.", input: "new Person { Name = 'Alice', Age = 30 };", output: "{\"Name\":\"Alice\",\"Age\":30}" },
+            { id: 193, category: "Practical Applications & Utilities", question: "Deserialize the JSON string created in the previous problem back into a `Person` object.", input: "string jsonString = '{\"Name\":\"Alice\",\"Age\":30}';", output: "Person object with Name = 'Alice', Age = 30" },
+            { id: 194, category: "Practical Applications & Utilities", question: "Write a simple `async` method `DownloadDataAsync()` that simulates a long-running operation (e.g., `Task.Delay(3000)`). Demonstrate calling it with `await` and show that the UI/console doesn't freeze during the delay.", input: "None", output: "Starting download...\\nDownload complete!" },
+            { id: 195, category: "Practical Applications & Utilities", question: "Design a basic generic interface `IRepository<T>` with methods like `GetById(int id)`, `GetAll()`, `Add(T entity)`, `Update(T entity)`, `Delete(int id)`. Briefly show how you'd implement a concrete `UserRepository` or `ProductRepository` based on it.", input: "None", output: "Code structure demonstrating interface and class implementation" },
+            { id: 196, category: "Practical Applications & Utilities", question: "Create a simple utility class `UnitConverter` with static methods for common conversions, e.g., `ConvertCelsiusToFahrenheit(double celsius)` and `ConvertKilometersToMiles(double kilometers)`. ", input: "UnitConverter.ConvertCelsiusToFahrenheit(25);", output: "77" },
+            { id: 197, category: "Practical Applications & Utilities", question: "Write a method that takes a `DateTime` representing a birthdate and calculates the current age of the person.", input: "DateTime birthDate = new DateTime(1990, 7, 18); (assuming current date is 2025-07-18)", output: "35" },
+            { id: 198, category: "Practical Applications & Utilities", question: "Create a basic console application that presents a menu to the user (e.g., 1. Add Numbers, 2. Check Even/Odd, 3. Exit). Use a `while` loop and `switch` statement to handle user choices until they choose to exit.", input: "User choices: 1, then 5, 3, then 3", output: "Interactive console output" },
+            { id: 199, category: "Practical Applications & Utilities", question: "Read and print the value of a common environment variable (e.g., `PATH` or `USERNAME`) using C#.", input: "None", output: "PATH: C:\\...; USERNAME: [YourUsername]" },
+            { id: 200, category: "Practical Applications & Utilities", question: "Create a generic method `ReverseArray<T>(T[] array)` that reverses the elements of any type of array (e.g., `int[]`, `string[]`).", input: "int[] intArray = { 1, 2, 3, 4 };", output: "intArray becomes [4, 3, 2, 1]" }
+        ];
+
+        // Global state variables
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let selectedCategory = 'All Categories';
+        let filteredQuestions = [];
+
+        // DOM elements
+        const questionsListDiv = document.getElementById('questions-list');
+        const paginationControlsDiv = document.getElementById('pagination-controls');
+        const categoryFilterContainer = document.getElementById('category-filter-container');
+
+        // Function to get unique categories
+        function getUniqueCategories() {
+            const categories = new Set(questionsData.map(q => q.category));
+            const sortedCategories = Array.from(categories).sort();
+            return ['All Categories', ...sortedCategories];
+        }
+
+        // Function to filter questions based on the selected category
+        function filterQuestions() {
+            if (selectedCategory === 'All Categories') {
+                filteredQuestions = questionsData;
+            } else {
+                filteredQuestions = questionsData.filter(q => q.category === selectedCategory);
+            }
+        }
+
+        // Function to render questions for the current page
+        function renderQuestions() {
+            questionsListDiv.innerHTML = ''; // Clear previous questions
+
+            if (filteredQuestions.length === 0) {
+                questionsListDiv.innerHTML = '<p class="text-center text-gray-600 text-lg">No questions found for this category.</p>';
+                renderPagination(); // Still render pagination to hide if no questions
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentQuestions = filteredQuestions.slice(startIndex, endIndex);
+
+            currentQuestions.forEach(q => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'border border-gray-200 rounded-lg p-4 shadow-sm bg-white';
+                questionDiv.innerHTML = `
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                        Problem ${q.id}: ${q.category}
+                    </h3>
+                    <p class="text-gray-700 mb-3 leading-relaxed">${q.question}</p>
+                    ${(q.input || q.output) ? `
+                        <div class="bg-gray-50 border border-gray-100 rounded-md p-3 text-sm font-mono text-gray-800">
+                            ${q.input ? `
+                                <strong class="text-blue-600">Input:</strong>
+                                <pre>${q.input}</pre>
+                            ` : ''}
+                            ${q.output ? `
+                                <strong class="text-green-600">Output:</strong>
+                                <pre>${q.output}</pre>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+                `;
+                questionsListDiv.appendChild(questionDiv);
+            });
+
+            renderPagination(); // Update pagination controls after rendering questions
+        }
+
+        // Function to render pagination controls
+        function renderPagination() {
+            paginationControlsDiv.innerHTML = ''; // Clear previous pagination
+
+            const totalPages = Math.ceil(filteredQuestions.length / itemsPerPage);
+
+            if (totalPages <= 1) {
+                return; // No need for pagination if only one page or no questions
+            }
+
+            // Previous button
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Previous';
+            prevButton.className = `px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition-colors duration-200 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`;
+            prevButton.disabled = currentPage === 1;
+            prevButton.onclick = () => handlePageChange(currentPage - 1);
+            paginationControlsDiv.appendChild(prevButton);
+
+            // Page number buttons
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = `px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
+                    currentPage === i
+                        ? 'bg-blue-700 text-white shadow-lg'
+                        : 'bg-gray-200 text-gray-700 hover:bg-blue-100 hover:text-blue-700'
+                }`;
+                pageButton.onclick = () => handlePageChange(i);
+                paginationControlsDiv.appendChild(pageButton);
+            }
+
+            // Next button
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next';
+            nextButton.className = `px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition-colors duration-200 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`;
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.onclick = () => handlePageChange(currentPage + 1);
+            paginationControlsDiv.appendChild(nextButton);
+        }
+
+        // Function to render category filter buttons
+        function renderCategories() {
+            categoryFilterContainer.innerHTML = ''; // Clear previous categories
+            const categories = getUniqueCategories();
+
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.textContent = category;
+                button.className = `px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                    selectedCategory === category
+                        ? 'bg-blue-600 text-white shadow-lg'
+                        : 'bg-gray-200 text-gray-700 hover:bg-blue-100 hover:text-blue-700'
+                }`;
+                button.onclick = () => handleCategoryChange(category);
+                categoryFilterContainer.appendChild(button);
+            });
+        }
+
+        // Event handler for page change
+        function handlePageChange(pageNumber) {
+            currentPage = pageNumber;
+            renderQuestions();
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top on page change
+        }
+
+        // Event handler for category change
+        function handleCategoryChange(category) {
+            selectedCategory = category;
+            currentPage = 1; // Reset to first page when category changes
+            filterQuestions(); // Re-filter questions
+            renderCategories(); // Re-render category buttons to update active state
+            renderQuestions(); // Re-render questions based on new filter
+        }
+
+        // Initial render on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            filterQuestions(); // Initial filter to populate filteredQuestions
+            renderCategories();
+            renderQuestions();
+        });
+    </script>
+</body>
+</html>
